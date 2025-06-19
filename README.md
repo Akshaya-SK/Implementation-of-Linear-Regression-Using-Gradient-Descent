@@ -17,14 +17,62 @@ To write a program to predict the profit of a city using the linear regression m
 ## Program:
 ```
 /*
-Program to implement the linear regression using gradient descent.
-Developed by: 
-RegisterNumber:  
+# Program to implement the linear regression using gradient descent.
+# Developed by: Akshaya S K
+# Register Number: 212223040011
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 1. Load dataset
+data = pd.read_csv('50_Startups.csv')
+
+# 2. Use only R&D Spend to predict Profit
+X = data['R&D Spend'].values
+y = data['Profit'].values
+
+# 3. Normalize data
+X = (X - np.mean(X)) / np.std(X)
+y = (y - np.mean(y)) / np.std(y)
+
+# 4. Initialize parameters
+m = 0  # slope
+b = 0  # intercept
+learning_rate = 0.01
+iterations = 1000
+n = len(X)
+
+# 5. Gradient Descent Loop
+for i in range(iterations):
+    y_pred = m * X + b
+    error = y_pred - y
+    cost = (1/n) * sum(error ** 2)
+    dm = (2/n) * sum(error * X)
+    db = (2/n) * sum(error)
+    m = m - learning_rate * dm
+    b = b - learning_rate * db
+    if i % 100 == 0:
+        print(f"Iteration {i}, Cost: {cost:.4f}, m: {m:.4f}, b: {b:.4f}")
+
+# 6. Final equation
+print(f"\nFinal equation: y = {m:.4f}x + {b:.4f}")
+
+# 7. Plotting
+plt.scatter(X, y, color='blue', label='Actual Data')
+plt.plot(X, m*X + b, color='red', label='Best Fit Line')
+plt.xlabel("R&D Spend (normalized)")
+plt.ylabel("Profit (normalized)")
+plt.title("Linear Regression using Gradient Descent")
+plt.legend()
+plt.grid(True)
+plt.show()
+
 */
 ```
 
 ## Output:
-![linear regression using gradient descent](sam.png)
+![image](https://github.com/user-attachments/assets/c4cfe520-939a-4201-b5b1-f835f62e0131)
 
 
 ## Result:
